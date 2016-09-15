@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <title>Screen Sharing using RTCMultiConnection with return</title>
+    <meta name="viewport" content="width=device-width" />
+</head>
+
+<body>
+    <article>
+        <header style="text-align: center;">
+            <h1>Screen Sharing using RTCMultiConnection with return</h1>
+        </header>
+
+        <section>
+            <button id="share-screen-and-audio">Share Screen + Audio</button>
+            <hr />
+            <div id="container"></div>
+        </section>
+
+        <script src="Scripts/socket.io.js"></script>
+        <script src="Scripts/RTCMultiConnection-stable.js"></script>
+
+        <script>
+            var connection = new RTCMultiConnection();
+            connection.session = {
+                audio: true,
+                screen: true
+            };
+            var sessions = {};
+            connection.onNewSession = function (session) {
+                // if room is not transmitted once;
+                // "onNewSession" will be called multiple times for same session;
+                // we need to store session-id in an object.
+                if (sessions[session.sessionid]) return;
+                sessions[session.sessionid] = session;
+                session.join({
+                    audio: true
+                });
+            };
+            connection.onstream = function (e) {
+                document.querySelector('div#container').appendChild(e.mediaElement);
+            };
+            connection.connect();
+            document.querySelector('#share-screen-and-audio').onclick = function () {
+                this.disabled = true;
+                connection.open();
+            };
+        </script>
+    </article>
+</body>
+</html>
