@@ -6613,8 +6613,8 @@
 
         // www.RTCMultiConnection.org/docs/openSignalingChannel/
         // http://goo.gl/uvoIcZ
-        //var SIGNALING_SERVER = 'https://video3.e-sdn.com:3124/';
-        var SIGNALING_SERVER = 'https://26.e-sdn.com:3124/';
+        var SIGNALING_SERVER = 'https://video3.e-sdn.com:3124/';
+        //var SIGNALING_SERVER = 'https://26.e-sdn.com:3124/';
         connection.openSignalingChannel = function (config) {
             var channel = config.channel || this.channel;
             var sender = Math.round(Math.random() * 9999999999) + 9999999999;
