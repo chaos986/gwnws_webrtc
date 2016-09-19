@@ -4898,9 +4898,7 @@
 
             if (useWebKit) {
                 servers = {
-                    iceServers: [{
-                        urls: 'turn:video3.e-sdn.com:3478'
-                    }]
+                    iceServers: []
                 };
 
                 if (typeof DetectRTC !== 'undefined' && DetectRTC.browser.isFirefox && DetectRTC.browser.version <= 38) {
@@ -5901,14 +5899,6 @@
 
         var iceServers = [];
 
-        iceServers.push({
-            //urls: 'turn:67.55.152.88:5349',
-            //urls: 'turn:67.128.212.146:3478',
-            urls: 'turn:video3.e-sdn.com:3478',
-            credential: 'TrustNo1_Slurm',
-            username: 'enlighten'
-        });
-
         connection.iceServers = iceServers;
 
         connection.rtcConfiguration = {
@@ -6614,7 +6604,6 @@
         // www.RTCMultiConnection.org/docs/openSignalingChannel/
         // http://goo.gl/uvoIcZ
         var SIGNALING_SERVER = 'https://video3.e-sdn.com:3124/';
-        //var SIGNALING_SERVER = 'https://26.e-sdn.com:3124/';
         connection.openSignalingChannel = function (config) {
             var channel = config.channel || this.channel;
             var sender = Math.round(Math.random() * 9999999999) + 9999999999;

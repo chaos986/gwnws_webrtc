@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
+    <Content Include="adapterjs.html" />
     <Content Include="Images\videoBackGround1.png" />
     <Content Include="return.html" />
     <Content Include="index.html" />
