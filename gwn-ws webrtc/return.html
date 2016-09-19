@@ -15,6 +15,7 @@
 
         <section>
             <button id="share-screen-and-audio">Share Screen + Audio</button>
+            <button id="stop-screen-and-audio" disabled>Stop Screen + Audio</button>
             <hr />
             <div id="container"></div>
         </section>
@@ -23,13 +24,13 @@
         <script src="Scripts/RTCMultiConnection-stable.js"></script>
 
         <script>
-            var connection = new RTCMultiConnection();
-            connection.session = {
+            var rmc = new RTCMultiConnection();
+            rmc.session = {
                 audio: true,
                 screen: true
             };
             var sessions = {};
-            connection.onNewSession = function (session) {
+            rmc.onNewSession = function (session) {
                 // if room is not transmitted once;
                 // "onNewSession" will be called multiple times for same session;
                 // we need to store session-id in an object.
@@ -39,14 +40,25 @@
                     audio: true
                 });
             };
-            connection.onstream = function (e) {
+            rmc.onstream = function (e) {
                 document.querySelector('div#container').appendChild(e.mediaElement);
             };
-            connection.connect();
+            rmc.connect();
             document.querySelector('#share-screen-and-audio').onclick = function () {
                 this.disabled = true;
-                connection.open();
+                document.querySelector('#stop-screen-and-audio').disabled = false;
+                rmc.open();
             };
+            document.querySelector('#stop-screen-and-audio').onclick = function () {
+                this.disabled = true;
+                document.querySelector('#share-screen-and-audio').disabled = false;
+                // stop all media streams
+                rmc.streams.selectAll({ local: true }).forEach(stream => {
+                    stream.stop();
+                    document.querySelector('div#container').removeChild(stream.mediaElement);
+                });
+            };
+
         </script>
     </article>
 </body>
